@@ -4,9 +4,7 @@ import Welcome from '../components/welcome';
 
 const WelcomePage = () => {
   return (
-    <Landing>
         <Welcome/>
-    </Landing>
   )
 }
 

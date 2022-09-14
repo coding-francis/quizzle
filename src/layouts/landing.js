@@ -1,17 +1,16 @@
 import React from 'react'
+import { Row } from 'antd'
 
 const Landing = ({children}) => {
     const styles = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         width: '100%',
-        height: '100vh'
+        height: 'auto',
+      background: '#08001c'
     }
   return (
-    <div style={styles}>
+    <Row align='middle' justify='center' style={styles}>
         {children}
-    </div>
+    </Row>
   )
 }
 
