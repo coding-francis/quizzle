@@ -14,15 +14,14 @@ const Setup = () => {
     const [showCat, setShowCat] = useState(true)
     const [showDif, setShowDif] = useState(false)
     const [showLim, setShowLim] = useState(false)
+    const { Title } = Typography
+    const boolSetter = (bool1, bool2, bool3) => {
+        setShowCat(bool1)
+        setShowDif(bool2)
+        setShowLim(bool3)
+    }
     const Divisions = () => {
-    
-        const boolSetter = (bool1, bool2, bool3) => {
-            setShowCat(bool1)
-            setShowDif(bool2)
-            setShowLim(bool3)
-        }
-    
-        const { Title } = Typography
+   
         return (
             <Row align='middle' justify='center' className='segment'>
                 <Col span={8} className={'segment-item'} style={{ background: showCat && '#08001c' , color: showCat ? '#91A2B8' : '#08001c'}} onClick={() => boolSetter(true, false, false)}>
@@ -42,16 +41,17 @@ const Setup = () => {
     }
     return (
         <Layout>
-            <Col className='fill-up setup-card' xs={24} md={12} lg={18}>
+            <Col className='fill-up setup-card' xs={24} md={16} lg={18}>
+                <Title style={{color: '#91A2B8', textAlign: 'center'}}>Quiz Setup</Title>
                 <Divisions />
                 {
-                    showCat && <Categories/>
+                    showCat && <Categories nextSegment={boolSetter}/>
                 }
                 {
-                    showDif && <Difficulty/>
+                    showDif && <Difficulty nextSegment={boolSetter} />
                 }
                 {
-                    showLim && <Limit/>
+                    showLim && <Limit nextSegment={boolSetter} />
                 }
             </Col>
         </Layout>

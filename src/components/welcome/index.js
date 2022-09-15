@@ -8,7 +8,7 @@ const Welcome = () => {
     const { Title, Text } = Typography
     return (
         <Row className='jumbotron' align='middle' justify='center'>
-            <Col xs={24} md={12} lg={7} className='welcome-card '>
+            <Col xs={24} sm={18} md={12} lg={10} className='welcome-card '>
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <img src={logo} alt="Logo" width={70} />
                     <Title className='quizzle'>Quizzle</Title>
@@ -16,7 +16,7 @@ const Welcome = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <Title level={4} style={{ color: '#38e9bb', margin: 0 }}>Let's Play!!!</Title>
                     <Title level={5} style={{ color: '#1F1147', margin: 0 }}>Play now and Level up</Title>
-                    <Link to={'/setup'}>
+                    <Link to={'/setup'} style={{width: '100%'}}>
                         <Button className='get-started-btn'>Get Started</Button>
                     </Link>
                 </div>

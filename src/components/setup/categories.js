@@ -1,5 +1,7 @@
 import React from 'react'
-import { Row, Col, Typography, Divider } from 'antd'
+import { Row, Col, Typography, Button } from 'antd'
+import { useDispatch } from 'react-redux'
+import {category} from '../../store/actions'
 import { MdOutlineOndemandVideo, MdOutlineScience, MdOutlineSportsBasketball } from 'react-icons/md'
 import { BsPalette, BsClockHistory } from 'react-icons/bs'
 import { BiLandscape, BiMusic } from 'react-icons/bi'
@@ -7,18 +9,18 @@ import { IoFastFoodOutline } from 'react-icons/io5'
 import { GiBrain } from 'react-icons/gi'
 import { RiHandHeartLine } from 'react-icons/ri'
 
-const Categories = () => {
-    let data = []
+const Categories = ({nextSegment}) => {
+    const dispatch = useDispatch()
     const handleChecked = (e) => {
-        if (e.target.checked === true) {
-            data.push(e.target.name)
-        } else {
-            data.pop(e.target.name)
-        }
-        console.log(data)
+        dispatch(category(e.target.name))
+        console.log(e.target.name)
+        // if (e.target.checked === true) {
+
+        // } 
     }
 
     const { Title, Text } = Typography
+
     return (
         <Row className='list-categories' gutter={[0, 20]}>
             <Col span={24} style={{ background: 'rgba(50, 22, 124,0.1)', borderRadius: 8, padding: '5px 15px' }}>
@@ -74,6 +76,9 @@ const Categories = () => {
                     <input type="checkbox" name={'sport_and_leisure'} onChange={handleChecked} />
                     <span className='category-icon'><MdOutlineSportsBasketball size={20} color={'#08001c'}/></span>
                     <Text className='category-text'>Sports &#38; Leisure</Text>
+                </Col>
+                <Col xs={24} md={12} className='next-segment'>
+                    <Button className='next-segment-btn' onClick={() => nextSegment(false, true, false)}>Next</Button>
                 </Col>
             </Row>
         </Row>
