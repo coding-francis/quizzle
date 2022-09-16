@@ -1,42 +1,22 @@
 export const rules = [
     {
         id: '1',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
+        name: `You will have only 15 seconds per each questions.`
     },
     {
         id: '2',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
+        name: `Once you select you answer, you can't reselect.`
     },
     {
         id: '3',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
+        name: `You can't select any option on timeout.`
     },
     {
         id: '4',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
+        name: `You can't exit from the Quiz while you're playing.`
     },
     {
         id: '5',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
-    },
-    {
-        id: '6',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
-    },
-    {
-        id: '7',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
-    },
-    {
-        id: '8',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
-    },
-    {
-        id: '9',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
-    },
-    {
-        id: '10',
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, vero.'
+        name: `You earn point per number of correct answers provided.`
     },
 ]

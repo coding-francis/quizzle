@@ -1,8 +1,9 @@
 import React from 'react'
+import Quiz from '../components/quiz'
 
 const QuizPage = () => {
   return (
-    <div>QuizPage</div>
+    <Quiz/>
   )
 }
 

@@ -46,9 +46,9 @@ const Limit = ({ nextSegment }) => {
           <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Title level={4} style={{ color: '#08001c' }}>Rules of the Quiz</Title>
           </Col>
-          <Col span={24} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <Col span={24} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             {
-              rules.map(item => (<Text key={item.id} className='rule' style={{ color: '#08001c' }}><b>{item.id}. </b>{item.name}</Text>))
+              rules.map((item, _) => (<Text key={item.id} className='rule' style={{ color: '#08001c', border: _ === (rules.length - 1) && 'none' }}><b>{item.id}. </b>{item.name}</Text>))
             }
             
           </Col>
