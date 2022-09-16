@@ -13,17 +13,13 @@ const Categories = ({nextSegment}) => {
     const dispatch = useDispatch()
     const handleChecked = (e) => {
         dispatch(category(e.target.name))
-        console.log(e.target.name)
-        // if (e.target.checked === true) {
-
-        // } 
     }
 
     const { Title, Text } = Typography
 
     return (
         <Row className='list-categories' gutter={[0, 20]}>
-            <Col span={24} style={{ background: 'rgba(50, 22, 124,0.1)', borderRadius: 8, padding: '5px 15px' }}>
+            <Col span={24} className='name-header'>
                 <Title level={5} style={{ color: '#91A2B8' }}>Category name</Title>
             </Col>
             <Row gutter={[10, 20]} align='middle' justify='center'>

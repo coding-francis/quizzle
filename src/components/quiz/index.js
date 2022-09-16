@@ -1,19 +1,31 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Row, Col, Typography, Modal } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { limit, category, difficulty, questions } from '../../store/actions'
 import { GiAlarmClock } from 'react-icons/gi'
 import { FaQuestionCircle } from 'react-icons/fa'
 import _ from 'lodash'
-import { questions } from '../../helpers/questions'
+import { useSelector, useDispatch } from 'react-redux'
 import Layout from '../../layouts/landing'
 import logo from '../../assets/logo.png'
 import './styles.css'
 
 const Quiz = () => {
+    // Redux States
+    const { Questions: questions } = useSelector(state => state)
+
+    // useStates
     const [questionNumber, setQuestionNumber] = useState(0)
     const [time, setTime] = useState(9)
     const [showModal, setModal] = useState(false)
     const [answers, setAnswers] = useState([])
-    const [answerBg, setAnswerBg] = useState('')
+    const [correctCount, setCorrectCount] = useState(0)
+
+    // navigate
+    const navigate = useNavigate()
+
+    // dispatcher
+    const dispatcher = useDispatch()
     const { Title, Text } = Typography
 
     const correctAnswer = questions[questionNumber].correctAnswer
@@ -22,7 +34,7 @@ const Quiz = () => {
         const ans = [...questions[questionNumber].incorrectAnswers, questions[questionNumber].correctAnswer]
         const shuffledAnswers = _.shuffle(ans)
         setAnswers(shuffledAnswers)
-    }, [questionNumber])
+    }, [questionNumber, questions])
 
     useEffect(() => {
         getQuestions()
@@ -30,8 +42,7 @@ const Quiz = () => {
 
     const next = () => {
         const answerBg = document.getElementsByClassName('answer')
-        for(let i=0; i<answerBg.length; i++){
-            // answerBg[i].style.background = '#32167c0d'
+        for (let i = 0; i < answerBg.length; i++) {
             answerBg[i].classList.remove('isCorrect', 'isWrong')
         }
 
@@ -44,6 +55,7 @@ const Quiz = () => {
 
     const checkAnswer = (answer) => {
         if (answer === correctAnswer) {
+            setCorrectCount(correctCount + 1)
             document.getElementById(answer).classList.add('isCorrect')
             setTimeout(() => {
                 next()
@@ -51,7 +63,7 @@ const Quiz = () => {
         } else {
             const answerBg = document.getElementsByClassName('answer')
             for (let i = 0; i < answerBg.length; i++) {
-                if(answerBg[i].innerHTML === correctAnswer){
+                if (answerBg[i].innerHTML === correctAnswer) {
                     answerBg[i].classList.add('isCorrect')
                 }
             }
@@ -60,6 +72,15 @@ const Quiz = () => {
                 next()
             }, 1500)
         }
+    }
+    
+    const handleCancel = () => {
+        navigate('/setup')
+        dispatcher(category('general_knowledge'))
+        dispatcher(limit(5))
+        dispatcher(difficulty('hard'))
+        dispatcher(questions([]))
+        setModal(false)
     }
 
     return (
@@ -70,13 +91,13 @@ const Quiz = () => {
                     <Title style={{ color: '#38e9bb', textAlign: 'center', margin: 0 }}>Quizzle</Title>
                 </Col>
                 <Col span={24} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Title level={4} style={{ margin: 0, padding: 0, color: '#99AFC1', display: 'flex', alignItems: 'center', gap: 6 }}><FaQuestionCircle size={30}/>Question {questionNumber + 1}</Title>
+                    <Title level={4} style={{ margin: 0, padding: 0, color: '#99AFC1', display: 'flex', alignItems: 'center', gap: 6 }}><FaQuestionCircle size={30} />Question {questionNumber + 1}</Title>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 5 }}>
                         <GiAlarmClock size={30} color={'#38e9bb'} /> <span className='time-left'>{time}</span>
                     </div>
                 </Col>
                 <Col span={24} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ margin: 0, padding: 0, color: '#99AFC1', fontSize: 20}}>{questions[questionNumber].question}</Text>
+                    <Text style={{ margin: 0, padding: 0, color: '#99AFC1', fontSize: 20 }}>{questions[questionNumber].question}</Text>
                 </Col>
                 <Col span={24} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column', gap: 10 }}>
                     {answers.map((item, id) => (
@@ -85,10 +106,13 @@ const Quiz = () => {
                         </div>
                     ))}
                 </Col>
-
+                <Col span={24} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column', gap: 10 }}>
+                    <Text style={{color: '#38e9bb', margin: 0, fontSize: 20}}>Answered questions: <b>{questionNumber}</b></Text>
+                    <Text style={{color: '#38e9bb', margin: 0, fontSize: 20}}>Correctly answered: <b>{correctCount}</b></Text>
+                </Col>
             </Row>
-            <Modal visible={showModal}>
-
+            <Modal open={showModal} onCancel={handleCancel}>
+                
             </Modal>
         </Layout>
     )

@@ -17,3 +17,9 @@ export const limit = (data) => {
         payload: data
     }
 }
+export const questions = (data) => {
+    return {
+        type: 'QUESTIONS',
+        payload: data
+    }
+}

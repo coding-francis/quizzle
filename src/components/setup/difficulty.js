@@ -13,13 +13,12 @@ const Difficulty = ({ nextSegment }) => {
 
   const handleChange = (e) => {
     setValue(e)
-    // dispatcher(difficulty(e))
-    console.log(levels[e])
+    dispatcher(difficulty(levels[e].toLowerCase()))
   }
   return (
 
     <Row className='list-categories' gutter={[0, 20]} align={'middle'} justify={'center'}>
-      <Col span={24} style={{ background: 'rgba(50, 22, 124,0.1)', borderRadius: 8, padding: '5px 15px' }}>
+      <Col className = 'name-header'>
         <Title level={5} style={{ color: '#91A2B8' }}>Difficulty Level</Title>
       </Col>
 

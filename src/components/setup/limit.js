@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { limit } from '../../store/actions'
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { limit, questions } from '../../store/actions'
 import { marksLimit } from '../../helpers/marks'
 import { IoIosCloseCircle } from 'react-icons/io'
 import { rules } from '../../helpers/rules'
@@ -14,6 +15,13 @@ const Limit = ({ nextSegment }) => {
   const { Title, Text } = Typography
 
   const dispatcher = useDispatch()
+  const {Category, Difficulty, Limit} = useSelector(state => state)
+
+  const handleStart = async () => {
+    setVisible(true)
+    const results = await axios.get(`https://the-trivia-api.com/api/questions?categories=${Category}&difficulty=${Difficulty}&limit=${Limit}`)
+    dispatcher(questions(results.data))
+  }
 
   const handleChange = (e) => {
     setValue(e)
@@ -26,7 +34,7 @@ const Limit = ({ nextSegment }) => {
   return (
 
     <Row className='list-categories' gutter={[0, 20]} align={'middle'} justify={'center'}>
-      <Col span={24} style={{ background: 'rgba(50, 22, 124,0.1)', borderRadius: 8, padding: '5px 15px' }}>
+      <Col span={24} className='name-header'>
         <Title level={5} style={{ color: '#91A2B8' }}>Number of Questions</Title>
       </Col>
 
@@ -38,10 +46,10 @@ const Limit = ({ nextSegment }) => {
       </Col>
       <Col xs={24} md={12} className='next-segment'>
         <Button className='next-segment-btn' onClick={() => nextSegment(false, true, false)}>Previous</Button>
-        <Button className='next-segment-btn' onClick={() => setVisible(true)}>Start</Button>
+        <Button className='next-segment-btn' onClick={handleStart}>Start</Button>
       </Col>
 
-      <Modal visible={visible} footer={null} closeIcon={<IoIosCloseCircle size={30} color={'#ff000080'} style={{ marginTop: 15 }} />} onCancel={handleClose}>
+      <Modal open={visible} footer={null} closeIcon={<IoIosCloseCircle size={30} color={'#ff000080'} style={{ marginTop: 15 }} />} onCancel={handleClose}>
         <Row gutter={[0, 15]} align={'middle'} justify={'center'}>
           <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Title level={4} style={{ color: '#08001c' }}>Rules of the Quiz</Title>
@@ -53,11 +61,11 @@ const Limit = ({ nextSegment }) => {
             
           </Col>
           <Col span={24} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 5 }}>
-            <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
+            <div style={{display: 'flex', gap: 5}}>
               <input type={'checkbox'} checked={checker} onChange={() => setChecker(!checker)} style={{width: 15, height: 15}}/>
               <label htmlFor="checkbox">I have read and understood the terms and rules of this quiz.</label>
             </div>
-            <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
+            <div style={{display: 'flex', gap: 5}}>
               <input type={'checkbox'} checked={checker} onChange={() => setChecker(!checker)} style={{width: 15, height: 15}}/>
               <label htmlFor="checkbox">I AGREE TO START.</label>
             </div>

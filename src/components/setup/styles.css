@@ -1,6 +1,12 @@
 .setup-card {
-    padding-top: 50px;
+    padding: 50px;
     min-height: 40%;
+}
+
+.name-header{
+     background: rgba(50, 22, 124,0.1);
+     border-radius: 8px;
+     padding: 5px 15px;
 }
 
 .segment {
