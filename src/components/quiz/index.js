@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Row, Col, Typography, Modal } from 'antd'
 import { GiAlarmClock } from 'react-icons/gi'
+import { FaQuestionCircle } from 'react-icons/fa'
 import _ from 'lodash'
 import { questions } from '../../helpers/questions'
 import Layout from '../../layouts/landing'
@@ -30,8 +31,8 @@ const Quiz = () => {
     const next = () => {
         const answerBg = document.getElementsByClassName('answer')
         for(let i=0; i<answerBg.length; i++){
-            answerBg[i].style.background = '#32167c0d'
-
+            // answerBg[i].style.background = '#32167c0d'
+            answerBg[i].classList.remove('isCorrect', 'isWrong')
         }
 
         if (questionNumber === questions.length - 1) {
@@ -43,18 +44,18 @@ const Quiz = () => {
 
     const checkAnswer = (answer) => {
         if (answer === correctAnswer) {
-            document.getElementById(answer).style.background = 'green'
+            document.getElementById(answer).classList.add('isCorrect')
             setTimeout(() => {
                 next()
             }, 1500)
         } else {
             const answerBg = document.getElementsByClassName('answer')
             for (let i = 0; i < answerBg.length; i++) {
-                if(answerBg[i].children[0].innerHTML === correctAnswer){
-                    answerBg[i].style.background = 'green'
+                if(answerBg[i].innerHTML === correctAnswer){
+                    answerBg[i].classList.add('isCorrect')
                 }
             }
-            document.getElementById(answer).style.background = 'red'
+            document.getElementById(answer).classList.add('isWrong')
             setTimeout(() => {
                 next()
             }, 1500)
@@ -69,18 +70,18 @@ const Quiz = () => {
                     <Title style={{ color: '#38e9bb', textAlign: 'center', margin: 0 }}>Quizzle</Title>
                 </Col>
                 <Col span={24} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Title level={4} style={{ margin: 0, padding: 0, color: '#99AFC1' }}>Question {questionNumber + 1}</Title>
+                    <Title level={4} style={{ margin: 0, padding: 0, color: '#99AFC1', display: 'flex', alignItems: 'center', gap: 6 }}><FaQuestionCircle size={30}/>Question {questionNumber + 1}</Title>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 5 }}>
                         <GiAlarmClock size={30} color={'#38e9bb'} /> <span className='time-left'>{time}</span>
                     </div>
                 </Col>
                 <Col span={24} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Title level={4} style={{ margin: 0, padding: 0, color: '#99AFC1' }}>{questions[questionNumber].question}</Title>
+                    <Text style={{ margin: 0, padding: 0, color: '#99AFC1', fontSize: 20}}>{questions[questionNumber].question}</Text>
                 </Col>
                 <Col span={24} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column', gap: 10 }}>
                     {answers.map((item, id) => (
                         <div key={id} className='answer' id={item} onClick={() => checkAnswer(item)}>
-                            <Title level={4} style={{ color: '#99AFC1', margin: 0, padding: 0 }}>{item}</Title>
+                            {item}
                         </div>
                     ))}
                 </Col>
