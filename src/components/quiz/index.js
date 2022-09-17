@@ -16,7 +16,7 @@ const Quiz = () => {
 
     // useStates
     const [questionNumber, setQuestionNumber] = useState(0)
-    const [time, setTime] = useState(9)
+    const [time, setTime] = useState(10)
     const [showModal, setModal] = useState(false)
     const [answers, setAnswers] = useState([])
     const [correctCount, setCorrectCount] = useState(0)
@@ -36,8 +36,28 @@ const Quiz = () => {
         setAnswers(shuffledAnswers)
     }, [questionNumber, questions])
 
+    let counter
+    const startTimer = (time) => {
+        const timer = () => {
+            if(time <= 9){
+                setTime('0' + time)
+            }else{
+                setTime(time)
+            }
+                time--
+            console.log(time)
+
+            if(time === 0){
+                clearInterval(counter)
+                setTime(15)
+            }
+        }
+        counter = setInterval(timer, 1000)
+    }
+
     useEffect(() => {
         getQuestions()
+        startTimer(time)
     }, [getQuestions])
 
     const next = () => {
@@ -73,7 +93,7 @@ const Quiz = () => {
             }, 1500)
         }
     }
-    
+
     const handleCancel = () => {
         navigate('/setup')
         dispatcher(category('general_knowledge'))
@@ -107,12 +127,12 @@ const Quiz = () => {
                     ))}
                 </Col>
                 <Col span={24} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column', gap: 10 }}>
-                    <Text style={{color: '#38e9bb', margin: 0, fontSize: 20}}>Answered questions: <b>{questionNumber}</b></Text>
-                    <Text style={{color: '#38e9bb', margin: 0, fontSize: 20}}>Correctly answered: <b>{correctCount}</b></Text>
+                    <Text style={{ color: '#38e9bb', margin: 0, fontSize: 20 }}>Answered questions: <b>{questionNumber}</b></Text>
+                    <Text style={{ color: '#38e9bb', margin: 0, fontSize: 20 }}>Correctly answered: <b>{correctCount}</b></Text>
                 </Col>
             </Row>
             <Modal open={showModal} onCancel={handleCancel}>
-                
+
             </Modal>
         </Layout>
     )
