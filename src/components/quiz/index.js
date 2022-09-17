@@ -28,37 +28,46 @@ const Quiz = () => {
     const dispatcher = useDispatch()
     const { Title, Text } = Typography
 
+
     const correctAnswer = questions[questionNumber].correctAnswer
 
-    const getQuestions = useCallback(() => {
-        const ans = [...questions[questionNumber].incorrectAnswers, questions[questionNumber].correctAnswer]
-        const shuffledAnswers = _.shuffle(ans)
-        setAnswers(shuffledAnswers)
-    }, [questionNumber, questions])
 
     let counter
-    const startTimer = (time) => {
+    const startTimer = (value) => {
         const timer = () => {
-            if(time <= 9){
-                setTime('0' + time)
+            if(value <= 9){
+                setTime('0' + value)
             }else{
-                setTime(time)
+                setTime(value)
             }
-                time--
-            console.log(time)
-
-            if(time === 0){
-                clearInterval(counter)
-                setTime(15)
+                value--
+            
+            if(value < 0){
+                next()
             }
+            // if(time === 0){
+            //     clearInterval(counter)
+            //     setTime(15)
+            // }
         }
         counter = setInterval(timer, 1000)
     }
 
     useEffect(() => {
-        getQuestions()
-        startTimer(time)
-    }, [getQuestions])
+            const ans = [...questions[questionNumber].incorrectAnswers, questions[questionNumber].correctAnswer]
+            const shuffledAnswers = _.shuffle(ans)
+            setAnswers(shuffledAnswers)
+
+        let timeValue = 10
+        startTimer(timeValue)
+    }, [questionNumber])
+
+    const clearer = () => {
+        setQuestionNumber(questionNumber + 1)
+        clearInterval(counter)
+        setTime(10)
+        // startTimer(time)
+    }
 
     const next = () => {
         const answerBg = document.getElementsByClassName('answer')
@@ -69,7 +78,8 @@ const Quiz = () => {
         if (questionNumber === questions.length - 1) {
             setModal(true)
         } else {
-            setQuestionNumber(questionNumber + 1)
+            clearer()
+            // setQuestionNumber(questionNumber + 1)
         }
     }
 

@@ -7,6 +7,7 @@ import { IoIosCloseCircle } from 'react-icons/io'
 import { rules } from '../../helpers/rules'
 import { Link } from 'react-router-dom'
 import { Slider, Typography, Row, Col, Button, Modal } from 'antd'
+import { questions as qs} from '../../helpers/questions'
 
 const Limit = ({ nextSegment }) => {
   const [value, setValue] = useState(5);
@@ -19,8 +20,8 @@ const Limit = ({ nextSegment }) => {
 
   const handleStart = async () => {
     setVisible(true)
-    const results = await axios.get(`https://the-trivia-api.com/api/questions?categories=${Category}&difficulty=${Difficulty}&limit=${Limit}`)
-    dispatcher(questions(results.data))
+    // const results = await axios.get(`https://the-trivia-api.com/api/questions?categories=${Category}&difficulty=${Difficulty}&limit=${Limit}`)
+    dispatcher(questions(qs))
   }
 
   const handleChange = (e) => {
