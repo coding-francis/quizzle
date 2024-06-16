@@ -1,11 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
-import rootReducer from './reducers'
+import {} from 'jotai'
+import {atomWithStorage} from "jotai/utils";
 
-export default configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            immutableCheck: false,
-            serializableCheck: false,
-        })
-})
+
+const category = atomWithStorage('category', '')
+const limit = atomWithStorage('limit', '')
+const difficulty = atomWithStorage('difficulty', '')
+const type = atomWithStorage('type', '')
+const question = atomWithStorage('question', '')

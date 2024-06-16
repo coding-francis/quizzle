@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Row, Col, Typography, Modal } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { limit, category, difficulty, questions } from '../../store/actions'
 import { GiAlarmClock } from 'react-icons/gi'
 import { FaQuestionCircle } from 'react-icons/fa'
 import _ from 'lodash'
-import { useSelector, useDispatch } from 'react-redux'
-import Layout from '../../layouts/landing'
+import Layout from '../../layout'
 import logo from '../../assets/logo.png'
 import './styles.css'
 
 const Quiz = () => {
-    // Redux States
-    const { Questions: questions } = useSelector(state => state)
-
+    const questions = []
     // useStates
     const [questionNumber, setQuestionNumber] = useState(0)
     const [time, setTime] = useState(10)
@@ -24,13 +20,10 @@ const Quiz = () => {
     // navigate
     const navigate = useNavigate()
 
-    // dispatcher
-    const dispatcher = useDispatch()
     const { Title, Text } = Typography
 
 
     const correctAnswer = questions[questionNumber].correctAnswer
-
 
     let counter
     const startTimer = (value) => {
@@ -106,10 +99,10 @@ const Quiz = () => {
 
     const handleCancel = () => {
         navigate('/setup')
-        dispatcher(category('general_knowledge'))
-        dispatcher(limit(5))
-        dispatcher(difficulty('hard'))
-        dispatcher(questions([]))
+        // dispatcher(category('general_knowledge'))
+        // dispatcher(limit(5))
+        // dispatcher(difficulty('hard'))
+        // dispatcher(questions([]))
         setModal(false)
     }
 

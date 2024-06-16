@@ -1,5 +1,5 @@
 import React from 'react'
-import Landing from '../layouts/landing'
+import Landing from '../layout'
 import Welcome from '../components/welcome';
 
 const WelcomePage = () => {

@@ -1,32 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  margin: 0;
-  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #08001c !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /*background: #08001c !important;*/
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 
 :root {
-  --color-dark: #08001c;
-  --color-darkblue: #32167C;
-  --color-violet: #361E70;
-  --color-blue: #6949FD;
-  --color-green: #38e9bb;
+    --color-dark: #08001c;
+    --color-darkblue: #32167C;
+    --color-violet: #361E70;
+    --color-blue: #6949FD;
+    --color-green: #38e9bb;
+}
+
+.custom-shadow {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 5px 20px, rgba(0, 0, 0, 0.01) 0px 3px 3px;
+}
+
+.custom-rounded {
+    border: 1px solid transparent;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    color: #08001c;
+}
+
+.trigger-rounded:hover .custom-rounded {
+    border-radius: 70% 30% 30% 70% / 60% 40%;
+    box-shadow: none;
 }
 
 
+.trigger-rounded
+.checkbox {
+    position: absolute;
+    background: red;
+}
+
+@keyframes flyInAnimation {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.fly-in {
+    animation: flyInAnimation 0.5s ease-in-out forwards;
+}
+
 @media only screen and (max-width: 500px) {
-  .fill-up {
-    width: 100% !important;
-    height: inherit;
-    border-radius: 0 !important;
-  }
+    .fill-up {
+        width: 100% !important;
+        height: inherit;
+        border-radius: 0 !important;
+    }
 }

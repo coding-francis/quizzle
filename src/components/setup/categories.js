@@ -1,83 +1,102 @@
-import React from 'react'
-import { Row, Col, Typography, Button } from 'antd'
-import { useDispatch } from 'react-redux'
-import {category} from '../../store/actions'
-import { MdOutlineOndemandVideo, MdOutlineScience, MdOutlineSportsBasketball } from 'react-icons/md'
-import { BsPalette, BsClockHistory } from 'react-icons/bs'
-import { BiLandscape, BiMusic } from 'react-icons/bi'
-import { IoFastFoodOutline } from 'react-icons/io5'
-import { GiBrain } from 'react-icons/gi'
-import { RiHandHeartLine } from 'react-icons/ri'
+import React, {useState} from 'react'
+import {MdOutlineOndemandVideo, MdOutlineScience, MdOutlineSportsBasketball} from 'react-icons/md'
+import {BsPalette, BsClockHistory} from 'react-icons/bs'
+import {BiLandscape, BiMusic} from 'react-icons/bi'
+import {IoFastFoodOutline} from 'react-icons/io5'
+import {GiBrain} from 'react-icons/gi'
+import {RiHandHeartLine} from 'react-icons/ri'
 
 const Categories = ({nextSegment}) => {
-    const dispatch = useDispatch()
+    const [isChecked, setIsChecked] = useState(false)
     const handleChecked = (e) => {
-        dispatch(category(e.target.name))
+        setIsChecked(!isChecked)
+        const targetElement = e.target
+        const currentElement = targetElement.closest('.trigger-rounded')
+
+        if (isChecked){
+            const checkBox = document.createElement('span');
+            checkBox.style.position = 'absolute'
+            checkBox.textContent = 'X';
+            checkBox.classList.add('checkbox')
+            currentElement.appendChild(checkBox);
+        }
+
+        console.log(currentElement.getAttribute('data-custom-name'))
+
     }
 
-    const { Title, Text } = Typography
-
     return (
-        <Row className='list-categories' gutter={[0, 20]}>
-            <Col span={24} className='name-header'>
-                <Title level={5} style={{ color: '#91A2B8' }}>Category name</Title>
-            </Col>
-            <Row gutter={[10, 20]} align='middle' justify='center'>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'arts_and_literature'} onChange={handleChecked} />
-                    <span className='category-icon'><BsPalette size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Arts &#38; Literature</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'film_and_tv'} onChange={handleChecked} />
-                    <span className='category-icon'><MdOutlineOndemandVideo size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Film &#38; TV</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'food_and_drink'} onChange={handleChecked} />
-                    <span className='category-icon'><IoFastFoodOutline size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Food &#38; Drinks</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'general_knowledge'} onChange={handleChecked} />
-                    <span className='category-icon'><GiBrain size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>General Knowledge</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'geography'} onChange={handleChecked} />
-                    <span className='category-icon'><BiLandscape size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Geography</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'history'} onChange={handleChecked} />
-                    <span className='category-icon'><BsClockHistory size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>History</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'music'} onChange={handleChecked} />
-                    <span className='category-icon'><BiMusic size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Music</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'science'} onChange={handleChecked} />
-                    <span className='category-icon'><MdOutlineScience size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Science</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'society_and_culture'} onChange={handleChecked} />
-                    <span className='category-icon'><RiHandHeartLine size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Society &#38; Culture</Text>
-                </Col>
-                <Col xs={24} md={12} className='category-item'>
-                    <input type="checkbox" name={'sport_and_leisure'} onChange={handleChecked} />
-                    <span className='category-icon'><MdOutlineSportsBasketball size={20} color={'#08001c'}/></span>
-                    <Text className='category-text'>Sports &#38; Leisure</Text>
-                </Col>
-                <Col xs={24} md={12} className='next-segment'>
-                    <Button className='next-segment-btn' onClick={() => nextSegment(false, true, false)}>Next</Button>
-                </Col>
-            </Row>
-        </Row>
+        <div className={'fly-in'}>
+            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-10'>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:text-red-900  hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={'test'} onClick={handleChecked}>
+                    <span className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-blue-500  group-hover:border-blue-500'><BsPalette/></span>
+                    <p className='text-center text-[#000]'>Arts &#38; Literature</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span
+                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-red-500  group-hover:border-red-500'><MdOutlineOndemandVideo/></span>
+                    <p className='text-center text-[#000]'>Film &#38; TV</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span
+                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-green-500  group-hover:border-green-500'><IoFastFoodOutline/></span>
+                    <p className='text-center text-[#000]'>Food &#38; Drinks</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-yellow-500  group-hover:border-yellow-500'><GiBrain/></span>
+                    <p className='text-center text-[#000]'>General Knowledge</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span
+                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-pink-500  group-hover:border-pink-500'><BiLandscape/></span>
+                    <p className='text-center text-[#000]'>Geography</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span
+                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-orange-500  group-hover:border-orange-500'><BsClockHistory/></span>
+                    <p className='text-center text-[#000]'>History</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-zinc-500  group-hover:border-zinc-500'><BiMusic/></span>
+                    <p className='text-center text-[#000]'>Music</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span
+                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-lime-500  group-hover:border-lime-500'><MdOutlineScience/></span>
+                    <p className='text-center text-[#000]'>Science</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span
+                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-purple-500  group-hover:border-purple-500'><RiHandHeartLine/></span>
+                    <p className='text-center text-[#000]'>Society &#38; Culture</p>
+                </div>
+                <div
+                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
+                    data-custom-name={''} onClick={handleChecked}>
+                    <span
+                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-red-200  group-hover:border-red-200'><MdOutlineSportsBasketball/></span>
+                    <p className='text-center text-[#000]'>Sports &#38; Leisure</p>
+                </div>
+            </div>
+        </div>
     )
 }
 

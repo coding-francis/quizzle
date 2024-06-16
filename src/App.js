@@ -1,7 +1,6 @@
 import React from 'react'
 import AppRoutes from './app-routes';
 
-
 function App() {
   return (
     <AppRoutes />
