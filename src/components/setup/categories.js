@@ -1,103 +1,74 @@
-import React, {useState} from 'react'
-import {MdOutlineOndemandVideo, MdOutlineScience, MdOutlineSportsBasketball} from 'react-icons/md'
-import {BsPalette, BsClockHistory} from 'react-icons/bs'
-import {BiLandscape, BiMusic} from 'react-icons/bi'
-import {IoFastFoodOutline} from 'react-icons/io5'
-import {GiBrain} from 'react-icons/gi'
-import {RiHandHeartLine} from 'react-icons/ri'
+import React, { useEffect, useState } from 'react';
+import selectedCheckMark from '../../assets/selected-check.png'
+import { MdOutlineOndemandVideo, MdOutlineScience, MdOutlineSportsBasketball } from 'react-icons/md';
+import { BsPalette, BsClockHistory, BsBook, BsDisplay, BsLaptop, BsCalculator, BsPeople, BsCar, BsPhoneFill } from 'react-icons/bs';
+import { BiLandscape, BiMusic } from 'react-icons/bi';
+import { IoFastFoodOutline, IoGameControllerOutline } from 'react-icons/io5';
+import { GiBrain, GiTheaterCurtains, GiMeepleGroup, GiGreekTemple, GiCat, GiJapan, GiPolitics } from 'react-icons/gi';
+import { RiHandHeartLine } from 'react-icons/ri';
+import { MdOutlineAnimation } from 'react-icons/md'
+import { FaRandom } from "react-icons/fa";
+import { useAtom } from 'jotai';
+import { category as Category } from '../../store'
 
-const Categories = ({nextSegment}) => {
-    const [isChecked, setIsChecked] = useState(false)
-    const handleChecked = (e) => {
-        setIsChecked(!isChecked)
-        const targetElement = e.target
-        const currentElement = targetElement.closest('.trigger-rounded')
+const Categories = ({ nextSegment }) => {
+    const categories = [
+        { icon: FaRandom, name: 'Random', color: 'teal', id: '' },
+        { icon: GiBrain, name: 'General Knowledge', color: 'yellow', id: '9' },
+        { icon: BsBook, name: 'Entertainment: Books', color: 'purple', id: '10' },
+        { icon: MdOutlineOndemandVideo, name: 'Entertainment: Film', color: 'red', id: '11' },
+        { icon: BiMusic, name: 'Entertainment: Music', color: 'zinc', id: '12' },
+        { icon: GiTheaterCurtains, name: 'Entertainment: Musicals & Theatres', color: 'purple', id: '13' },
+        { icon: BsDisplay, name: 'Entertainment: Television', color: 'teal', id: '14' },
+        { icon: IoGameControllerOutline, name: 'Entertainment: Video Games', color: 'green', id: '15' },
+        //{ icon: GiMeepleGroup, name: 'Entertainment: Board Games', color: 'amber', id: '16' },
+        { icon: MdOutlineScience, name: 'Science & Nature', color: 'lime', id: '17' },
+        { icon: BsLaptop, name: 'Science: Computers', color: 'cyan', id: '18' },
+        { icon: BsCalculator, name: 'Science: Mathematics', color: 'indigo', id: '19' },
+        { icon: GiGreekTemple, name: 'Mythology', color: 'rose', id: '20' },
+        { icon: MdOutlineSportsBasketball, name: 'Sports', color: 'red-200', id: '21' },
+        { icon: BiLandscape, name: 'Geography', color: 'pink', id: '22' },
+        { icon: BsClockHistory, name: 'History', color: 'orange', id: '23' },
+        //{ icon: GiPolitics, name: 'Politics', color: 'gray', id: '24' },
+        { icon: BsPalette, name: 'Art', color: 'blue', id: '25' },
+        { icon: BsPeople, name: 'Celebrities', color: 'fuchsia', id: '26' },
+        { icon: GiCat, name: 'Animals', color: 'emerald', id: '27' },
+        //{ icon: BsCar, name: 'Vehicles', color: 'slate', id: '28' },
+        { icon: BsBook, name: 'Entertainment: Comics', color: 'violet', id: '29' },
+        { icon: BsPhoneFill, name: 'Science: Gadgets', color: 'sky', id: '30' },
+        { icon: GiJapan, name: 'Entertainment: Japanese Anime & Manga', color: 'pink', id: '31' },
+        { icon: MdOutlineAnimation, name: 'Entertainment: Cartoon & Animations', color: 'amber', id: '32' }
+    ];
 
-        if (isChecked){
-            const checkBox = document.createElement('span');
-            checkBox.style.position = 'absolute'
-            checkBox.textContent = 'X';
-            checkBox.classList.add('checkbox')
-            currentElement.appendChild(checkBox);
-        }
+    const [category, setCategory] = useAtom(Category)
 
-        console.log(currentElement.getAttribute('data-custom-name'))
-
-    }
+    const handleSelect = (categoryId) => {
+        setCategory(categoryId === category ? null : categoryId);
+    };
 
     return (
-        <div className={'fly-in'}>
-            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-10'>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:text-red-900  hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={'test'} onClick={handleChecked}>
-                    <span className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-blue-500  group-hover:border-blue-500'><BsPalette/></span>
-                    <p className='text-center text-[#000]'>Arts &#38; Literature</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span
-                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-red-500  group-hover:border-red-500'><MdOutlineOndemandVideo/></span>
-                    <p className='text-center text-[#000]'>Film &#38; TV</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span
-                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-green-500  group-hover:border-green-500'><IoFastFoodOutline/></span>
-                    <p className='text-center text-[#000]'>Food &#38; Drinks</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-yellow-500  group-hover:border-yellow-500'><GiBrain/></span>
-                    <p className='text-center text-[#000]'>General Knowledge</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span
-                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-pink-500  group-hover:border-pink-500'><BiLandscape/></span>
-                    <p className='text-center text-[#000]'>Geography</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span
-                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-orange-500  group-hover:border-orange-500'><BsClockHistory/></span>
-                    <p className='text-center text-[#000]'>History</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-zinc-500  group-hover:border-zinc-500'><BiMusic/></span>
-                    <p className='text-center text-[#000]'>Music</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span
-                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-lime-500  group-hover:border-lime-500'><MdOutlineScience/></span>
-                    <p className='text-center text-[#000]'>Science</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span
-                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-purple-500  group-hover:border-purple-500'><RiHandHeartLine/></span>
-                    <p className='text-center text-[#000]'>Society &#38; Culture</p>
-                </div>
-                <div
-                    className={'group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 w-52 h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg trigger-rounded'}
-                    data-custom-name={''} onClick={handleChecked}>
-                    <span
-                        className='w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-red-200  group-hover:border-red-200'><MdOutlineSportsBasketball/></span>
-                    <p className='text-center text-[#000]'>Sports &#38; Leisure</p>
-                </div>
+        <div className="fly-in">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-10">
+                {categories.map(({ id, icon: Icon, name, color }) => (
+                    <div
+                        key={id}
+                        className={`group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 max-w-10 w-full h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg ${id === '' ? 'border-2 border-black bg-slate-100': ''}`}
+                        onClick={() => handleSelect(id)}
+                    >
+                        <span className={`w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-${color}-500 group-hover:border-${color}-500`}>
+                            <Icon />
+                        </span>
+                        <p className="text-center text-[#000]">{name}</p>
+                        {category === id && (
+                            <div className="absolute -top-2 -right-2 z-10 rounded-full bg-white text-green-500">
+                                <img src={selectedCheckMark} width={30} />
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Categories
+export default Categories;

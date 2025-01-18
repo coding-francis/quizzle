@@ -3,7 +3,7 @@ import logo from '../assets/logo.png'
 import {Link} from 'react-router-dom'
 const Layout = ({children}) => {
   return (
-    <div className={'w-full xl:w-[80%] m-auto h-auto px-4 md:px-[10%]'}>
+    <div className={'w-full xl:w-[80%] m-auto h-auto px-7 sm:px-12 md:px-20'}>
       <nav className="my-3 bg-black/5 text-black rounded-md">
         <div className="container mx-auto flex items-center justify-between px-10 py-1">
           <div className="flex justify-center items-center">
