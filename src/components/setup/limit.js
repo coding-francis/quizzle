@@ -1,78 +1,33 @@
-import React, { useState } from 'react'
-import { marksLimit } from '../../helpers/marks'
-import { IoIosCloseCircle } from 'react-icons/io'
-import { rules } from '../../helpers/rules'
-import { Link } from 'react-router-dom'
-import { Slider, Typography, Row, Col, Button, Modal } from 'antd'
+import React, { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import { limit as Limits } from '../../store'
+import { FaMinus, FaPlus } from "react-icons/fa";
 
-const Limit = ({ nextSegment }) => {
-  const [value, setValue] = useState(5);
-  const [visible, setVisible] = useState(false);
-  const [checker, setChecker] = useState(false);
-  const { Title, Text } = Typography
-  const handleStart = async () => {
-    setVisible(true)
-    // const results = await axios.get(`https://the-trivia-api.com/api/questions?categories=${Category}&difficulty=${Difficulty}&limit=${Limit}`)
-    // dispatcher(questions(qs))
-  }
+const Limit = ({ }) => {
+    const [limit, setLimit] = useAtom(Limits)
+    const [disableMinus, setDisableMinus] = useState(false)
+    const [disablePlus, setDisablePlus] = useState(false)
 
-  const handleChange = (e) => {
-    setValue(e)
-    // dispatcher(limit(e))
-  }
-  const handleClose = () => {
-    setChecker(false)
-    setVisible(false)
-  }
-  return (
+    useEffect(() => {
+        if (limit === 5){setDisableMinus(prev => prev = true)}
+        else { setDisableMinus(prev => prev = false) }
 
-    <Row className='list-categories' gutter={[0, 20]} align={'middle'} justify={'center'}>
-      <Col span={24} className='name-header'>
-        <Title level={5} style={{ color: '#91A2B8' }}>Number of Questions</Title>
-      </Col>
+        if (limit === 30) { setDisablePlus(prev => prev = true) }
+        else { setDisablePlus(prev => prev = false) }
+}, [limit])
+    return (
+        <div className='flex items-center space-x-8 justify-center md:justify-start'>
+            <button className={`w-16 h-16 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-black group-hover:border-black`} onClick={() => setLimit(prev => prev - 5)} disabled={disableMinus}>
+                <FaMinus size={20} />
+            </button>
+            <span className={`w-20 h-20 text-4xl flex justify-center items-center custom-rounded text-[24px] group-hover:text-black group-hover:border-black`}>
+                {limit}
+            </span>
+            <button className={`w-16 h-16 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-black group-hover:border-black`} onClick={() => setLimit(prev => prev + 5)} disabled={disablePlus}>
+                <FaPlus size={20} />
+            </button>
+        </div>
+    );
+};
 
-      <Col span={24} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <Slider min={5} max={30} step={5} marks={marksLimit} dots onChange={handleChange} style={{ width: '100%' }} />
-      </Col>
-      <Col span={24} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <Title level={4} style={{ color: '#91A2B8' }}>{value} Questions</Title>
-      </Col>
-      <Col xs={24} md={12} className='next-segment'>
-        <Button className='next-segment-btn' onClick={() => nextSegment(false, true, false)}>Previous</Button>
-        <Button className='next-segment-btn' onClick={handleStart}>Start</Button>
-      </Col>
-
-      <Modal open={visible} footer={null} closeIcon={<IoIosCloseCircle size={30} color={'#ff000080'} style={{ marginTop: 15 }} />} onCancel={handleClose}>
-        <Row gutter={[0, 15]} align={'middle'} justify={'center'}>
-          <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Title level={4} style={{ color: '#08001c' }}>Rules of the Quiz</Title>
-          </Col>
-          <Col span={24} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            {
-              rules.map((item, _) => (<Text key={item.id} className='rule' style={{ color: '#08001c', border: _ === (rules.length - 1) && 'none' }}><b>{item.id}. </b>{item.name}</Text>))
-            }
-            
-          </Col>
-          <Col span={24} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 5 }}>
-            <div style={{display: 'flex', gap: 5}}>
-              <input type={'checkbox'} checked={checker} onChange={() => setChecker(!checker)} style={{width: 15, height: 15}}/>
-              <label htmlFor="checkbox">I have read and understood the terms and rules of this quiz.</label>
-            </div>
-            <div style={{display: 'flex', gap: 5}}>
-              <input type={'checkbox'} checked={checker} onChange={() => setChecker(!checker)} style={{width: 15, height: 15}}/>
-              <label htmlFor="checkbox">I AGREE TO START.</label>
-            </div>
-
-          </Col>
-          <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Link to={'/quiz'} style={{ width: '50%' }}>
-              <Button className='letsgobtn' style={{ display: checker ? 'block' : 'none' }}>Let's Go!</Button>
-            </Link>
-          </Col>
-        </Row>
-      </Modal>
-    </Row>
-  )
-}
-
-export default Limit
+export default Limit;

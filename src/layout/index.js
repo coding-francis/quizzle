@@ -8,7 +8,7 @@ const Layout = ({children}) => {
         <div className="container mx-auto flex items-center justify-between px-10 py-1">
           <div className="flex justify-center items-center">
             <img src={logo} alt="" width={60}/>
-            <h1 className={'text-white font-bold text-2xl text-black/60'}>Quizzle</h1>
+            <h1 className={'font-bold text-2xl text-black'}>Quizzle</h1>
           </div>
 
           <div className="space-x-4 text-black/60">

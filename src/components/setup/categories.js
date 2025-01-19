@@ -10,10 +10,11 @@ import { MdOutlineAnimation } from 'react-icons/md'
 import { FaRandom } from "react-icons/fa";
 import { useAtom } from 'jotai';
 import { category as Category } from '../../store'
+import SetupOptions from '../common/SetupOptions';
 
-const Categories = ({ nextSegment }) => {
+const Categories = ({    }) => {
     const categories = [
-        { icon: FaRandom, name: 'Random', color: 'teal', id: '' },
+        { icon: FaRandom, name: 'Random', color: 'teal', id: '', isDefault: true },
         { icon: GiBrain, name: 'General Knowledge', color: 'yellow', id: '9' },
         { icon: BsBook, name: 'Entertainment: Books', color: 'purple', id: '10' },
         { icon: MdOutlineOndemandVideo, name: 'Entertainment: Film', color: 'red', id: '11' },
@@ -41,33 +42,9 @@ const Categories = ({ nextSegment }) => {
     ];
 
     const [category, setCategory] = useAtom(Category)
-
-    const handleSelect = (categoryId) => {
-        setCategory(categoryId === category ? null : categoryId);
-    };
-
+    
     return (
-        <div className="fly-in">
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-10">
-                {categories.map(({ id, icon: Icon, name, color }) => (
-                    <div
-                        key={id}
-                        className={`group relative flex flex-col justify-evenly items-center bg-white rounded-lg px-10 max-w-10 w-full h-36 cursor-pointer hover:scale-105 transition-all duration-500 shadow-lg ${id === '' ? 'border-2 border-black bg-slate-100': ''}`}
-                        onClick={() => handleSelect(id)}
-                    >
-                        <span className={`w-12 h-12 shadow-md flex justify-center items-center custom-rounded text-[24px] group-hover:text-${color}-500 group-hover:border-${color}-500`}>
-                            <Icon />
-                        </span>
-                        <p className="text-center text-[#000]">{name}</p>
-                        {category === id && (
-                            <div className="absolute -top-2 -right-2 z-10 rounded-full bg-white text-green-500">
-                                <img src={selectedCheckMark} width={30} />
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </div>
+        <SetupOptions choice={category} setChoice={setCategory} optionsData={categories}/>
     );
 };
 
